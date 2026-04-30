@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`defaultOptions 1`] = `
-Object {
+{
   "asyncScriptTags": false,
   "cacheAjaxRequests": false,
   "concurrency": 4,
@@ -12,15 +12,15 @@ Object {
   "fixWebpackChunksIssue": "CRA1",
   "headless": true,
   "http2PushManifest": false,
-  "ignoreForPreload": Array [
+  "ignoreForPreload": [
     "service-worker.js",
   ],
-  "include": Array [
+  "include": [
     "/",
   ],
   "inlineCss": false,
-  "minifyCss": Object {},
-  "minifyHtml": Object {
+  "minifyCss": {},
+  "minifyHtml": {
     "collapseBooleanAttributes": true,
     "collapseWhitespace": true,
     "decodeEntities": true,
@@ -32,10 +32,10 @@ Object {
   "preconnectThirdParty": true,
   "preloadImages": false,
   "publicPath": "/",
-  "puppeteer": Object {
+  "puppeteer": {
     "cache": true,
   },
-  "puppeteerArgs": Array [],
+  "puppeteerArgs": [],
   "puppeteerExecutablePath": undefined,
   "puppeteerIgnoreHTTPSErrors": false,
   "removeBlobs": true,
@@ -46,7 +46,7 @@ Object {
   "source": "build",
   "sourceMaps": true,
   "userAgent": "ReactSnap",
-  "viewport": Object {
+  "viewport": {
     "height": 850,
     "width": 480,
   },

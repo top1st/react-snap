@@ -1,8 +1,11 @@
 // FIX: tests are slow - use unit tests instead of integration tests
 // TODO: capture console log from run function
 const fs = require("fs");
+const path = require("path");
 const writeFileSpy = jest.spyOn(fs, "writeFile");
 writeFileSpy.mockImplementation((file, data, cb) => cb());
+const writeFilePromisesSpy = jest.spyOn(fs.promises, "writeFile");
+writeFilePromisesSpy.mockImplementation(() => Promise.resolve());
 
 const { mockFs } = require("./helper.js");
 const { run } = require("./../index.js");
@@ -74,10 +77,15 @@ describe("saveAs png", () => {
     createWriteStreamMock
   } = mockFs();
   beforeAll(() => snapRun(mockedFs, { source, saveAs: "png" }));
-  afterAll(() => writeFileSpy.mockClear());
+  afterAll(() => {
+    writeFileSpy.mockClear();
+    writeFilePromisesSpy.mockClear();
+  });
   test("crawls / and saves as index.png to the same folder", () => {
-    expect(writeFileSpy).toHaveBeenCalledTimes(1);
-    expect(writeFileSpy.mock.calls[0][0]).toEqual(cwd + `/${source}/index.png`);
+    expect(writeFilePromisesSpy).toHaveBeenCalledTimes(1);
+    expect(writeFilePromisesSpy.mock.calls[0][0]).toEqual(
+      path.join(cwd, source, "index.png")
+    );
   });
   test("copies (original) index.html to 200.html", () => {
     expect(createReadStreamMock.mock.calls).toEqual([
@@ -96,11 +104,14 @@ describe("saveAs jpeg", () => {
     createWriteStreamMock
   } = mockFs();
   beforeAll(() => snapRun(mockedFs, { source, saveAs: "jpeg" }));
-  afterAll(() => writeFileSpy.mockClear());
+  afterAll(() => {
+    writeFileSpy.mockClear();
+    writeFilePromisesSpy.mockClear();
+  });
   test("crawls / and saves as index.png to the same folder", () => {
-    expect(writeFileSpy).toHaveBeenCalledTimes(1);
-    expect(writeFileSpy.mock.calls[0][0]).toEqual(
-      cwd + `/${source}/index.jpeg`
+    expect(writeFilePromisesSpy).toHaveBeenCalledTimes(1);
+    expect(writeFilePromisesSpy.mock.calls[0][0]).toEqual(
+      path.join(cwd, source, "index.jpeg")
     );
   });
   test("copies (original) index.html to 200.html", () => {

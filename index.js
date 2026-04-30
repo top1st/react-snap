@@ -261,6 +261,39 @@ const removeBlobs = async opt => {
 };
 
 /**
+ * minimalcss calls `page._client.send`, which current Puppeteer no longer exposes.
+ * @param {import("puppeteer").Browser} browser
+ * @returns {import("puppeteer").Browser}
+ */
+const browserForMinimalcss = browser =>
+  new Proxy(browser, {
+    get(target, prop, receiver) {
+      if (prop === "newPage") {
+        return async () => {
+          const page = await Reflect.get(target, "newPage").call(target);
+          const cdp = await page.createCDPSession();
+          Object.defineProperty(page, "_client", {
+            configurable: true,
+            enumerable: false,
+            value: {
+              send: (method, params) => cdp.send(method, params)
+            }
+          });
+          if (
+            typeof page.removeListener !== "function" &&
+            typeof page.off === "function"
+          ) {
+            page.removeListener = page.off.bind(page);
+          }
+          return page;
+        };
+      }
+      const value = Reflect.get(target, prop, receiver);
+      return typeof value === "function" ? value.bind(target) : value;
+    }
+  });
+
+/**
  * @param {{page: Page, pageUrl: string, options: {skipThirdPartyRequests: boolean, userAgent: string}, basePath: string, browser: Browser}} opt
  * @return {Promise}
  */
@@ -271,7 +304,7 @@ const inlineCss = async opt => {
     urls: [pageUrl],
     skippable: request =>
       options.skipThirdPartyRequests && !request.url().startsWith(basePath),
-    browser: browser,
+    browser: browserForMinimalcss(browser),
     userAgent: options.userAgent
   });
   const criticalCss = minimalcssResult.finalCss;

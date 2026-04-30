@@ -6,8 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const { createTracker, augmentTimeoutError } = require("./tracker");
 
-const errorToString = jsHandle =>
-  jsHandle.executionContext().evaluate(e => e.toString(), jsHandle);
+const errorToString = jsHandle => jsHandle.evaluate(e => e.toString());
 
 const objectToJson = jsHandle => jsHandle.jsonValue();
 
@@ -87,7 +86,8 @@ const enableLogging = opt => {
     if (response.status() >= 400) {
       let route = "";
       try {
-        route = response._request
+        route = response
+          .request()
           .headers()
           .referer.replace(`http://localhost:${options.port}`, "");
       } catch (e) {}
@@ -198,7 +198,7 @@ const crawl = async opt => {
     headless: options.headless,
     args: options.puppeteerArgs,
     executablePath: options.puppeteerExecutablePath,
-    ignoreHTTPSErrors: options.puppeteerIgnoreHTTPSErrors,
+    acceptInsecureCerts: options.puppeteerIgnoreHTTPSErrors,
     handleSIGINT: false
   });
 
@@ -220,7 +220,8 @@ const crawl = async opt => {
     if (!shuttingDown && !skipExistingFile) {
       try {
         const page = await browser.newPage();
-        await page._client.send("ServiceWorker.disable");
+        const cdp = await page.createCDPSession();
+        await cdp.send("ServiceWorker.disable");
         await page.setCacheEnabled(options.puppeteer.cache);
         if (options.viewport) await page.setViewport(options.viewport);
         if (options.skipThirdPartyRequests)
@@ -245,7 +246,16 @@ const crawl = async opt => {
         } finally {
           tracker.dispose();
         }
-        if (options.waitFor) await page.waitFor(options.waitFor);
+        if (options.waitFor) {
+          const wf = options.waitFor;
+          if (typeof wf === "number") {
+            await new Promise(resolve => setTimeout(resolve, wf));
+          } else if (typeof wf === "string") {
+            await page.waitForSelector(wf);
+          } else if (typeof wf === "function") {
+            await page.waitForFunction(wf);
+          }
+        }
         if (options.crawl) {
           const links = await getLinks({ page });
           links.forEach(addToQueue);
