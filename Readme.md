@@ -1,6 +1,8 @@
-[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
+# @topdev/react-snap
 
-# react-snap [![Build Status](https://travis-ci.org/stereobooster/react-snap.svg?branch=master)](https://travis-ci.org/stereobooster/react-snap) [![npm](https://img.shields.io/npm/v/react-snap.svg)](https://www.npmjs.com/package/react-snap) ![npm](https://img.shields.io/npm/dt/react-snap.svg) [![Twitter Follow](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow)](https://twitter.com/stereobooster)
+[![npm version](https://img.shields.io/npm/v/@topdev/react-snap.svg)](https://www.npmjs.com/package/@topdev/react-snap) [![npm downloads](https://img.shields.io/npm/dt/@topdev/react-snap.svg)](https://www.npmjs.com/package/@topdev/react-snap) [![GitHub](https://img.shields.io/github/stars/top1st/react-snap?style=social&label=Star)](https://github.com/top1st/react-snap)
+
+Published on npm as **`@topdev/react-snap`** by [topdev](https://www.npmjs.com/~topdev). Source and issues: **[top1st/react-snap](https://github.com/top1st/react-snap)**. Fork of [stereobooster/react-snap](https://github.com/stereobooster/react-snap).
 
 Pre-renders a web app into static HTML. Uses [Headless Chrome](https://github.com/GoogleChrome/puppeteer) to crawl all available links starting from the root. Heavily inspired by [prep](https://github.com/graphcool/prep) and [react-snapshot](https://github.com/geelen/react-snapshot), but written from scratch. Uses best practices to get the best loading performance.
 
@@ -20,7 +22,7 @@ Pre-renders a web app into static HTML. Uses [Headless Chrome](https://github.co
 Install:
 
 ```sh
-yarn add --dev react-snap
+yarn add --dev @topdev/react-snap
 ```
 
 Change `package.json`:
@@ -64,7 +66,7 @@ if (rootElement.hasChildNodes()) {
 Install:
 
 ```sh
-yarn add --dev react-snap
+yarn add --dev @topdev/react-snap
 ```
 
 Change `package.json`:
@@ -86,7 +88,7 @@ Or use `preserveWhitespace: false` in `vue-loader`.
 
 `source` - output folder of webpack or any other bundler of your choice
 
-Read more about `minifyHtml` caveats in [#142](https://github.com/stereobooster/react-snap/issues/142).
+Read more about `minifyHtml` caveats in [#142](https://github.com/top1st/react-snap/issues/142).
 
 Example: [Switch from prerender-spa-plugin to react-snap](https://github.com/stereobooster/prerender-spa-plugin/commit/ee73d39b862bc905b44a04c6eaa58e6730957819)
 
@@ -252,7 +254,7 @@ window.snapSaveState = () => ({
 });
 ```
 
-**Caution**: as of now, only basic "JSON" data types are supported: e.g. `Date`, `Set`, `Map`, and `NaN` **won't** be handled correctly ([#54](https://github.com/stereobooster/react-snap/issues/54)).
+**Caution**: as of now, only basic "JSON" data types are supported: e.g. `Date`, `Set`, `Map`, and `NaN` **won't** be handled correctly ([#54](https://github.com/top1st/react-snap/issues/54)).
 
 ### Third-party requests: Google Analytics, Mapbox, etc.
 
@@ -268,7 +270,7 @@ You can block all third-party requests with the following config:
 
 Use `"cacheAjaxRequests": true` to enable this feature.
 
-This feature can conflict with the browser cache. See [#197](https://github.com/stereobooster/react-snap/issues/197#issuecomment-397893434) for details. You may want to disable cache in this case: `"puppeteer": { "cache": false }`.
+This feature can conflict with the browser cache. See [#197](https://github.com/top1st/react-snap/issues/197#issuecomment-397893434) for details. You may want to disable cache in this case: `"puppeteer": { "cache": false }`.
 
 ### Service Workers
 
@@ -278,7 +280,7 @@ By default, `create-react-app` uses `index.html` as a fallback:
 navigateFallback: publicUrl + '/index.html',
 ```
 
-You need to change this to an un-prerendered version of `index.html` - `200.html`, otherwise you will see `index.html` flash on other pages (if you have any). See [Configure sw-precache without ejecting](https://github.com/stereobooster/react-snap/blob/master/doc/recipes.md#configure-sw-precache-without-ejecting) for more information.
+You need to change this to an un-prerendered version of `index.html` - `200.html`, otherwise you will see `index.html` flash on other pages (if you have any). See [Configure sw-precache without ejecting](https://github.com/top1st/react-snap/blob/master/doc/recipes.md#configure-sw-precache-without-ejecting) for more information.
 
 ### Containers and other restricted environments
 
@@ -295,7 +297,7 @@ Read more about [puppeteer troubleshooting](https://github.com/GoogleChrome/pupp
 
 #### Docker + Alpine
 
-To run `react-snap` inside `docker` with Alpine, you might want to use a custom Chromium executable. See [#93](https://github.com/stereobooster/react-snap/issues/93#issuecomment-354994505) and [#132](https://github.com/stereobooster/react-snap/issues/132#issuecomment-362333702).
+To run `react-snap` inside `docker` with Alpine, you might want to use a custom Chromium executable. See [#93](https://github.com/top1st/react-snap/issues/93#issuecomment-354994505) and [#132](https://github.com/top1st/react-snap/issues/132#issuecomment-362333702).
 
 #### Heroku
 
@@ -325,11 +327,11 @@ From version `1.17.0`, `sortClassName` is `false` by default.
 >
 > https://github.com/cssinjs/jss/blob/master/docs/ssr.md
 
-This basically means that JSS doesn't support `rehydration`. See [#99](https://github.com/stereobooster/react-snap/issues/99) for a possible solutions.
+This basically means that JSS doesn't support `rehydration`. See [#99](https://github.com/top1st/react-snap/issues/99) for a possible solutions.
 
 ### `react-router` v3
 
-See [#135](https://github.com/stereobooster/react-snap/issues/135).
+See [#135](https://github.com/top1st/react-snap/issues/135).
 
 ### userAgent
 
