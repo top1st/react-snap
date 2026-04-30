@@ -3,9 +3,10 @@
   "version": "1.23.0",
   "description": "Zero-configuration framework-agnostic static prerendering for SPAs",
   "main": "index.js",
-  "author": "stereobooster",
+  "author": "topdev",
+  "email": "riguang102@gmail.com",
   "license": "MIT",
-  "repository": "stereobooster/react-snap",
+  "repository": "top1st/react-snap",
   "engines": {
     "node": ">=18"
   },
