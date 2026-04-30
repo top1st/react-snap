@@ -1,6 +1,6 @@
 {
   "name": "@topdev/react-snap",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Zero-configuration framework-agnostic static prerendering for SPAs",
   "main": "index.js",
   "author": "topdev <riguang102@gmail.com>",
